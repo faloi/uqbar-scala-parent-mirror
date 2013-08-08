@@ -1,7 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>uqbar-scala-parent</artifactId>
-	<version>1.1-SNAPSHOT</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<parent>
@@ -68,6 +69,15 @@
 	</dependencies>
 
 	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>2.3.2</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 		<plugins>
 			<plugin>
 				<!-- <groupId>org.scala-tools</groupId> <artifactId>maven-scala-plugin</artifactId> -->
@@ -76,33 +86,31 @@
 				<version>3.1.5</version>
 				<executions>
 					<execution>
-						<id>compile</id>
+						<id>scala-compile-first</id>
+						<!-- This is not a process resources goal, but a compile goal. Putting 
+							this goal in this phase ensures that the Scala compiler executes before Java 
+							compiler. The Scala compiler compiles both Java and Scala classes. Therefore, 
+							the Java compiler is not really needed. -->
+						<phase>process-resources</phase>
+						<configuration>
+							<scalaVersion>${scala.version}</scalaVersion>
+						</configuration>
 						<goals>
+							<goal>add-source</goal>
 							<goal>compile</goal>
 						</goals>
-						<phase>compile</phase>
 					</execution>
 					<execution>
-						<id>test-compile</id>
+						<id>scala-test-compile-first</id>
+						<phase>process-test-resources</phase>
+						<configuration>
+							<scalaVersion>${scala.version}</scalaVersion>
+						</configuration>
 						<goals>
 							<goal>testCompile</goal>
 						</goals>
-						<phase>test-compile</phase>
-					</execution>
-					<execution>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>compile</goal>
-						</goals>
 					</execution>
 				</executions>
-				<configuration>
-					<scalaVersion>${scala.version}</scalaVersion>
-					<includes>
-						<include>src/main/java/*.java</include>
-						<include>src/main/scala/*.scala</include>
-					</includes>
-				</configuration>
 			</plugin>
 
 			<plugin>
@@ -134,38 +142,6 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		<pluginManagement>
-			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings 
-					only. It has no influence on the Maven build itself. -->
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>net.alchim31.maven</groupId>
-										<artifactId>scala-maven-plugin</artifactId>
-										<versionRange>[3.1.5,)</versionRange>
-										<goals>
-											<goal>add-source</goal>
-											<goal>compile</goal>
-											<goal>testCompile</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore />
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 	</build>
 
 	<pluginRepositories>
