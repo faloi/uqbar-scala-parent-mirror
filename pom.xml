@@ -125,6 +125,7 @@
 				</configuration>
 			</plugin>
 
+			<!-- TODO: IS THIS NEEDED ? IS IT GENERIC ENOUGH FOR ALL SCALA PROJECTS ?? -->
 			<!-- mvn assembly:assembly -DdescriptorId=jar-with-dependencies -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
