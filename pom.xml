@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.uqbar-project</groupId>
 		<artifactId>uqbar-parent-project</artifactId>
-		<version>1.7</version>
+		<version>1.8-SNAPSHOT</version>
 	</parent>
 
 	<properties>
@@ -118,9 +118,6 @@
 				<version>2.6</version>
 				<configuration>
 					<useFile>false</useFile>
-					<disableXmlReport>true</disableXmlReport>
-					<!-- If you have classpath issue like NoDefClassError,... -->
-					<!-- useManifestOnlyJar>false</useManifestOnlyJar -->
 					<includes>
 						<include>**/*Test.*</include>
 						<include>**/*Suite.*</include>
@@ -129,7 +126,6 @@
 			</plugin>
 
 			<!-- mvn assembly:assembly -DdescriptorId=jar-with-dependencies -->
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
@@ -150,4 +146,5 @@
 			<url>http://scala-tools.org/repo-releases</url>
 		</pluginRepository>
 	</pluginRepositories>
+	
 </project>
