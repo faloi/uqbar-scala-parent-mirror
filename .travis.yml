@@ -1,0 +1,4 @@
+language: java
+nafter_success:
+  - mvn deploy
+- mv settings.xml ~/.m2/settings.xml
